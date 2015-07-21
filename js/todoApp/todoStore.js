@@ -2,11 +2,10 @@ var AppDispatcher = require('./AppDispatcher');
 var TodoConstants = require("./TodoConstants");
 var BaseStore = require('./BaseStore');
 
-var EventEmitter = require('events').EventEmitter;
-
 class TodoStoreClass extends BaseStore {
 	constructor() {
 		super();
+		this.counter = 0;
 	}
 
 	getInitialState() {
@@ -19,9 +18,10 @@ class TodoStoreClass extends BaseStore {
 			todos: [...this.state.todos, {
 				task: text,
 				done: false,
-				id: this.state.todos.length
+				id: this.counter
 			}]
 		});
+		this.counter++;
 	}
 
 	duringSetState() {
@@ -40,6 +40,39 @@ class TodoStoreClass extends BaseStore {
 		});
 	}
 
+	remove(id) {
+		this.setState({
+			todos: this.state.todos.filter(function (v) {
+				return v.id !== id;
+			})
+		});
+	}
+
+	remoteAllCompleted() {
+		this.setState({
+			todos: this.state.todos.filter(function (v) {
+				return v.done === false;
+			})
+		});
+	}
+
+	markAllDone() {
+		this.setState({
+			todos: this.state.todos.map(function (v) {
+				v.done = true;
+				return v;
+			})
+		});
+	}
+
+	markAllUnComplete() {
+		this.setState({
+			todos: this.state.todos.map(function (v) {
+				v.done = false;
+				return v;
+			})
+		});
+	}
 	markUnCompleted(id) {
 		this.setState({
 			todos: this.state.todos.map(function (v) {

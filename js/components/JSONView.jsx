@@ -11,7 +11,7 @@ class JSONView extends Component {
 	}
 
 	render() {
-		return <pre>{JSON.stringify(this.state, null, ' ')}</pre>;
+		return <pre>{JSON.stringify(this.state, null, '  ')}</pre>;
 	}
 }
 
