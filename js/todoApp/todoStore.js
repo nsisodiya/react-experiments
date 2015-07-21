@@ -1,27 +1,60 @@
 var AppDispatcher = require('./AppDispatcher');
 var TodoConstants = require("./TodoConstants");
-
+var BaseStore = require('./BaseStore');
 
 var EventEmitter = require('events').EventEmitter;
 
-class TodoStoreClass extends EventEmitter {
+class TodoStoreClass extends BaseStore {
 	constructor() {
 		super();
-		this.state = {
+	}
+
+	getInitialState() {
+		return {
 			todos: []
-		};
+		}
 	}
-
 	addTodo(text) {
-		this.state.todos.push({
-			task: text,
-			done: false
+		this.setState({
+			todos: [...this.state.todos, {
+				task: text,
+				done: false,
+				id: this.state.todos.length
+			}]
 		});
-		this.emit('change');
 	}
 
-	getState() {
-		return this.state;
+	duringSetState() {
+		this.state.completed = this.getTotalCompleted();
+		this.state.uncompleted = this.state.todos.length - this.state.completed;
+	}
+
+	markDone(id) {
+		this.setState({
+			todos: this.state.todos.map(function (v) {
+				if (v.id === id) {
+					v.done = true;
+				}
+				return v;
+			})
+		});
+	}
+
+	markUnCompleted(id) {
+		this.setState({
+			todos: this.state.todos.map(function (v) {
+				if (v.id === id) {
+					v.done = false;
+				}
+				return v;
+			})
+		});
+	}
+
+	getTotalCompleted() {
+		return this.state.todos.filter(function (v) {
+			return v.done === true;
+		}).length;
 	}
 }
 

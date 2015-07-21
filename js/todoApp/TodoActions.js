@@ -18,6 +18,12 @@ var TodoActions = {
 			actionType: TodoConstants.TODO_DELETE,
 			id: id
 		});
+	},
+	markDone: function (id) {
+		AppDispatcher.handleViewAction({
+			actionType: TodoConstants.TODO_DELETE,
+			id: id
+		});
 	}
 };
 
