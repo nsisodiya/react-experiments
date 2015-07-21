@@ -13,17 +13,27 @@ module.exports = function (grunt) {
 				autoIndex: true,
 				runInBackground: true
 			}
+		},
+		watch: {
+			reload: {
+				files: ["dist/**"],
+				options: {
+					livereload: true
+				}
+			},
+			css: {
+				files: ["style.css"],
+				options: {
+					livereload: true
+				}
+			}
 		}
 	});
 
 	grunt.loadNpmTasks('grunt-http-server');
-
-	grunt.config("watch", require('./grunt/watch.js'));
 	grunt.loadNpmTasks("grunt-contrib-watch");
-
 	grunt.loadNpmTasks('grunt-exec');
 
 	grunt.registerTask("webpackWatch", ["exec:webpack"]);
-
 	grunt.registerTask("default", ["http-server", "webpackWatch", "watch"]);
 };
