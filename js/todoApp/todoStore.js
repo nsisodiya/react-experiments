@@ -5,24 +5,26 @@ var BaseStore = require('./BaseStore');
 class TodoStoreClass extends BaseStore {
 	constructor() {
 		super();
-		this.counter = 0;
+		if (this.state.todos.length !== 0) {
+			this.counter = this.state.todos[this.state.todos.length - 1].id + 1;
+		} else {
+			this.counter = this.state.todos.length;
+		}
 	}
 
 	getInitialState() {
+		var defaultState = {
+			todos: []
+		};
 		try {
 			var state = JSON.parse(window.localStorage.getItem("todoStore"));
-
-			if (state) {
+			if (state !== null && state !== undefined) {
 				return state;
 			} else {
-				return {
-					todos: []
-				}
+				return defaultState;
 			}
 		} catch (ex) {
-			return {
-				todos: []
-			}
+			return defaultState;
 		}
 	}
 	addTodo(text) {
