@@ -8,9 +8,14 @@ var AppDispatcher = require('./AppDispatcher');
 var TodoConstants = require("./TodoConstants");
 
 var actionAlias = {
-	create: TodoConstants.TODO_CREATE,
-	remove: TodoConstants.TODO_DELETE,
-	markDone: TodoConstants.TODO_MARK_DONE
+	addTodo: TodoConstants.TODO_CREATE,
+	remove: TodoConstants.TODO_REMOVE,
+	markComplete: TodoConstants.TODO_MARK_COMPLETE,
+	markUnComplete: TodoConstants.TODO_MARK_UNCOMPLETE,
+	edit: TodoConstants.TODO_EDIT,
+	markAllComplete: TodoConstants.TODO_MARK_ALL_COMPLETE,
+	removeAllCompleted: TodoConstants.TODO_REMOVE_ALL_COMPLETED,
+	markAllUnComplete: TodoConstants.TODO_MARK_ALL_UNCOMPLETE
 };
 
 var TodoActions = {};

@@ -63,7 +63,7 @@ class TodoStoreClass extends BaseStore {
 		});
 	}
 
-	remoteAllCompleted() {
+	removeAllCompleted() {
 		this.setState({
 			todos: this.state.todos.filter(function (v) {
 				return v.done === false;
@@ -80,6 +80,17 @@ class TodoStoreClass extends BaseStore {
 		});
 	}
 
+	edit(id, task) {
+		this.setState({
+			todos: this.state.todos.map(function (v) {
+				if (v.id === id) {
+					v.task = task;
+				}
+				return v;
+			})
+		});
+	}
+
 	markAllUnComplete() {
 		this.setState({
 			todos: this.state.todos.map(function (v) {
@@ -88,7 +99,8 @@ class TodoStoreClass extends BaseStore {
 			})
 		});
 	}
-	markUnCompleted(id) {
+
+	markUnComplete(id) {
 		this.setState({
 			todos: this.state.todos.map(function (v) {
 				if (v.id === id) {
@@ -109,8 +121,13 @@ class TodoStoreClass extends BaseStore {
 var TodoStore = new TodoStoreClass();
 var actionToMethodsMapping = {
 	[TodoConstants.TODO_CREATE]: "addTodo",
-	[TodoConstants.TODO_DELETE]: "remove",
-	[TodoConstants.TODO_MARK_DONE]: "markComplete"
+	[TodoConstants.TODO_REMOVE]: "remove",
+	[TodoConstants.TODO_MARK_COMPLETE]: "markComplete",
+	[TodoConstants.TODO_EDIT]: "edit",
+	[TodoConstants.TODO_MARK_UNCOMPLETE]: "markUnComplete",
+	[TodoConstants.TODO_MARK_ALL_COMPLETE]: "markAllComplete",
+	[TodoConstants.TODO_MARK_ALL_UNCOMPLETE]: "markAllUnComplete",
+	[TodoConstants.TODO_REMOVE_ALL_COMPLETED]: "removeAllCompleted"
 };
 
 

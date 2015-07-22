@@ -12,13 +12,11 @@ class JSONView extends Component {
 
 	renderHeaderByKeys(keys) {
 		return <thead>
-			<tr>
-				{
-					keys.map((key) => {
-						return <th>{key}</th>
-					})
-				}
-			</tr>
+		<tr>{
+			keys.map((key) => {
+				return <th>{key}</th>
+			})
+		}</tr>
 		</thead>;
 	}
 
@@ -32,9 +30,9 @@ class JSONView extends Component {
 				{this.renderHeaderByKeys(Object.keys(obj))}
 				<tbody>
 				<tr>{
-						Object.keys(obj).map((key) => {
-							return this.renderTd(obj[key])
-						})
+					Object.keys(obj).map((key) => {
+						return this.renderTd(obj[key])
+					})
 				}</tr>
 				</tbody>
 			</table>;
@@ -89,6 +87,7 @@ class JSONView extends Component {
 		}
 	}
 
+//TODO - arning: Each child in an array or iterator should have a unique "key" prop. Check the render method of JSONView
 	render() {
 		return <div>{
 			this.objToTable(this.state)
