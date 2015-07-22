@@ -92,13 +92,17 @@ class TodoStoreClass extends BaseStore {
 }
 
 var TodoStore = new TodoStoreClass();
+var actionToMethodsMapping = {
+	[TodoConstants.TODO_CREATE]: "addTodo",
+	[TodoConstants.TODO_DELETE]: "remove",
+	[TodoConstants.TODO_MARK_DONE]: "markDone"
+};
+
 
 AppDispatcher.register(function (e) {
 	var action = e.action;
-	switch (action.actionType) {
-		case TodoConstants.TODO_CREATE:
-			TodoStore.addTodo(action.text);
-			break;
+	if (actionToMethodsMapping[action.actionType] !== undefined) {
+		TodoStore[actionToMethodsMapping[action.actionType]].apply(TodoStore, action.args);
 	}
 });
 window.store = TodoStore;
