@@ -9,8 +9,20 @@ class TodoStoreClass extends BaseStore {
 	}
 
 	getInitialState() {
-		return {
-			todos: []
+		try {
+			var state = JSON.parse(window.localStorage.getItem("todoStore"));
+
+			if (state) {
+				return state;
+			} else {
+				return {
+					todos: []
+				}
+			}
+		} catch (ex) {
+			return {
+				todos: []
+			}
 		}
 	}
 	addTodo(text) {
@@ -27,6 +39,7 @@ class TodoStoreClass extends BaseStore {
 	duringSetState() {
 		this.state.completed = this.getTotalCompleted();
 		this.state.uncompleted = this.state.todos.length - this.state.completed;
+		window.localStorage.setItem("todoStore", JSON.stringify(this.state));
 	}
 
 	markDone(id) {

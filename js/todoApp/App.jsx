@@ -12,7 +12,7 @@ class T extends Component {
 
 	}
 	render(){
-		return <div><h1>TODOs</h1>
+		return <div><h1>Todo Application is easy</h1>
 			<JSONView store={store}></JSONView>
 		</div>;
 	}
