@@ -58,6 +58,7 @@ class JSONView extends Component {
 			})()
 		}</td>
 	}
+
 	aobToTable(aob) {
 		var keys = Object.keys(aob[0]);
 		return <table>
@@ -75,6 +76,7 @@ class JSONView extends Component {
 			</tbody>
 		</table>;
 	}
+
 	checkIfArrayIsAOB(arr) {
 		if (Array.isArray(arr) === true && arr.length !== 0 && typeof arr[0] === "object") {
 			var keystr = JSON.stringify(Object.keys(arr[0]).sort());
@@ -87,11 +89,25 @@ class JSONView extends Component {
 		}
 	}
 
+	downloadState() {
+		var element = document.createElement('a');
+		element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(this.state)));
+		element.setAttribute('download', "state.json");
+		element.style.display = 'none';
+		document.body.appendChild(element);
+		element.click();
+		document.body.removeChild(element);
+	}
+
 //TODO - arning: Each child in an array or iterator should have a unique "key" prop. Check the render method of JSONView
 	render() {
-		return <div>{
-			this.objToTable(this.state)
-		}
+		return <div>
+			<div>
+				<button onClick={this.downloadState.bind(this)}>Download</button>
+			</div>
+			{
+				this.objToTable(this.state)
+			}
 			<pre style={{"display":"block"}}>{JSON.stringify(this.state, null, '  ')}</pre>
 		</div>;
 	}
