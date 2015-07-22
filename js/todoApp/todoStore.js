@@ -44,7 +44,7 @@ class TodoStoreClass extends BaseStore {
 		window.localStorage.setItem("todoStore", JSON.stringify(this.state));
 	}
 
-	markDone(id) {
+	markComplete(id) {
 		this.setState({
 			todos: this.state.todos.map(function (v) {
 				if (v.id === id) {
@@ -71,7 +71,7 @@ class TodoStoreClass extends BaseStore {
 		});
 	}
 
-	markAllDone() {
+	markAllComplete() {
 		this.setState({
 			todos: this.state.todos.map(function (v) {
 				v.done = true;
@@ -110,7 +110,7 @@ var TodoStore = new TodoStoreClass();
 var actionToMethodsMapping = {
 	[TodoConstants.TODO_CREATE]: "addTodo",
 	[TodoConstants.TODO_DELETE]: "remove",
-	[TodoConstants.TODO_MARK_DONE]: "markDone"
+	[TodoConstants.TODO_MARK_DONE]: "markComplete"
 };
 
 

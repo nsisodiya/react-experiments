@@ -11,7 +11,7 @@ class JSONView extends Component {
 	}
 
 	renderHeaderByKeys(keys) {
-		return <thread>
+		return <thead>
 			<tr>
 				{
 					keys.map((key) => {
@@ -19,12 +19,14 @@ class JSONView extends Component {
 					})
 				}
 			</tr>
-		</thread>;
+		</thead>;
 	}
 
 	objToTable(obj) {
 		if (Array.isArray(obj) === true && obj.length === 0) {
 			return "[ ]";
+		} else if (JSON.stringify(obj) === "{}") {
+			return "{ }";
 		} else {
 			return <table>
 				{this.renderHeaderByKeys(Object.keys(obj))}
@@ -32,11 +34,7 @@ class JSONView extends Component {
 				<tr>
 					{
 						Object.keys(obj).map((key) => {
-							return <td> {
-								(() => {
-									return this.decideFurther(obj[key]);
-								})()
-							}</td>
+							return this.renderTd(obj[key])
 						})
 					}
 				</tr>
@@ -45,9 +43,27 @@ class JSONView extends Component {
 		}
 	}
 
+	renderTd(guess) {
+		return <td> {
+			(() => {
+				if (Array.isArray(guess) === true) {
+					if (this.checkIfArrayIsAOB(guess)) {
+						return this.aobToTable(guess)
+					} else {
+						return this.objToTable(guess)
+					}
+				} else {
+					if (typeof guess === "object") {
+						return this.objToTable(guess)
+					} else {
+						return guess + "";
+					}
+				}
+			})()
+		}</td>
+	}
 	aobToTable(aob) {
 		var keys = Object.keys(aob[0]);
-
 		return <table>
 			{this.renderHeaderByKeys(keys)}
 			<tbody>
@@ -55,11 +71,7 @@ class JSONView extends Component {
 				aob.map((row)=> {
 					return <tr> {
 						keys.map((v)=> {
-							return <td>{
-								(()=> {
-									return this.decideFurther(row[v]);
-								})()
-							}</td>;
+							return this.renderTd(row[v]);
 						})
 					}</tr>;
 				})
@@ -67,23 +79,6 @@ class JSONView extends Component {
 			</tbody>
 		</table>;
 	}
-
-	decideFurther(guess) {
-		if (Array.isArray(guess) === true) {
-			if (this.checkIfArrayIsAOB(guess)) {
-				return this.aobToTable(guess)
-			} else {
-				return this.objToTable(guess)
-			}
-		} else {
-			if (typeof guess === "object") {
-				return this.objToTable(guess)
-			} else {
-				return guess + "";
-			}
-		}
-	}
-
 	checkIfArrayIsAOB(arr) {
 		if (Array.isArray(arr) === true) {
 			if (arr.length !== 0) {
