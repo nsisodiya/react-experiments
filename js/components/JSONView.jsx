@@ -31,20 +31,18 @@ class JSONView extends Component {
 			return <table>
 				{this.renderHeaderByKeys(Object.keys(obj))}
 				<tbody>
-				<tr>
-					{
+				<tr>{
 						Object.keys(obj).map((key) => {
 							return this.renderTd(obj[key])
 						})
-					}
-				</tr>
+				}</tr>
 				</tbody>
 			</table>;
 		}
 	}
 
 	renderTd(guess) {
-		return <td> {
+		return <td>{
 			(() => {
 				if (Array.isArray(guess) === true) {
 					if (this.checkIfArrayIsAOB(guess)) {
@@ -69,7 +67,7 @@ class JSONView extends Component {
 			<tbody>
 			{
 				aob.map((row)=> {
-					return <tr> {
+					return <tr>{
 						keys.map((v)=> {
 							return this.renderTd(row[v]);
 						})
@@ -80,22 +78,12 @@ class JSONView extends Component {
 		</table>;
 	}
 	checkIfArrayIsAOB(arr) {
-		if (Array.isArray(arr) === true) {
-			if (arr.length !== 0) {
-				console.log(typeof arr[0]);
-				if (typeof arr[0] === "object") {
-					var keystr = JSON.stringify(Object.keys(arr[0]).sort());
-
-					var unmatched = arr.filter((v)=> {
-						return keystr !== JSON.stringify(Object.keys(v).sort());
-					});
-					return unmatched.length === 0
-				} else {
-					return false;
-				}
-			} else {
-				return false;
-			}
+		if (Array.isArray(arr) === true && arr.length !== 0 && typeof arr[0] === "object") {
+			var keystr = JSON.stringify(Object.keys(arr[0]).sort());
+			var unmatched = arr.filter((v)=> {
+				return keystr !== JSON.stringify(Object.keys(v).sort());
+			});
+			return unmatched.length === 0
 		} else {
 			return false;
 		}
