@@ -11,7 +11,7 @@ class T extends Component {
 		super();
 	}
 	render(){
-		return <div><h1>Todo Application is easy.</h1>
+		return <div><h1>React 3233Todo App from Console</h1>
 			<JSONView store={store}></JSONView>
 		</div>;
 	}
