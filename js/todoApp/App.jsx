@@ -1,7 +1,7 @@
 
 
 import React, {Component} from 'react';
-import JSONView from '../components/JSONView.jsx';
+import StoreView from '../components/StoreView.jsx';
 
 var store = require('./todoStore');
 var TodoActions = require("./TodoActions");
@@ -11,8 +11,8 @@ class T extends Component {
 		super();
 	}
 	render(){
-		return <div><h1>React 3233Todo App from Console</h1>
-			<JSONView store={store}></JSONView>
+		return <div><h1>React Todo App from Console</h1>
+			<StoreView store={store}></StoreView>
 		</div>;
 	}
 }
