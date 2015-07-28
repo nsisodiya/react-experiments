@@ -16,16 +16,17 @@ class TodoStoreClass extends BaseStore {
 		var defaultState = {
 			todos: []
 		};
-		try {
-			var state = JSON.parse(window.localStorage.getItem("todoStore"));
-			if (state !== null && state !== undefined) {
-				return state;
-			} else {
-				return defaultState;
-			}
-		} catch (ex) {
-			return defaultState;
-		}
+		return defaultState;
+//		try {
+//			var state = JSON.parse(window.localStorage.getItem("todoStore"));
+//			if (state !== null && state !== undefined) {
+//				return state;
+//			} else {
+//				return defaultState;
+//			}
+//		} catch (ex) {
+//			return defaultState;
+//		}
 	}
 	addTodo(text) {
 		this.setState({
@@ -41,7 +42,7 @@ class TodoStoreClass extends BaseStore {
 	duringSetState() {
 		this.state.completed = this.getTotalCompleted();
 		this.state.uncompleted = this.state.todos.length - this.state.completed;
-		window.localStorage.setItem("todoStore", JSON.stringify(this.state));
+		//window.localStorage.setItem("todoStore", JSON.stringify(this.state));
 	}
 
 	markComplete(id) {
@@ -137,5 +138,4 @@ AppDispatcher.register(function (e) {
 		TodoStore[actionToMethodsMapping[action.actionType]].apply(TodoStore, action.args);
 	}
 });
-window.store = TodoStore;
 module.exports = TodoStore;

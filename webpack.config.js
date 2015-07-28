@@ -1,8 +1,11 @@
 module.exports = {
-	entry: "./index.jsx",
+	entry: {
+		main: "./js/dom/index.jsx",
+		worker: "./js/domless/worker.js"
+	},
 	output: {
 		path: "dist",
-		filename: "bundle.js"
+		filename: "[name].bundle.js"
 	},
 	module: {
 		loaders: [

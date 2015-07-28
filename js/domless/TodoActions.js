@@ -28,5 +28,5 @@ Object.keys(actionAlias).map(function (key) {
 	}
 });
 
-window.TodoActions = TodoActions;
+//window.TodoActions = TodoActions;
 module.exports = TodoActions;
