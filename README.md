@@ -1,9 +1,16 @@
 # react-experiments
 
-Requirements
-npm install http-server -g
-npm install grunt-cli -g
-npm install webpack -g
+##Requirements
 
-Execution
-Just run grunt in your terminal
+```bash
+npm install -g grunt-cli
+npm install -g webpack
+```
+##Execution
+
+```bash
+git clone https://github.com/nsisodiya/react-experiments.git
+cd react-experiments
+npm install
+grunt
+```
