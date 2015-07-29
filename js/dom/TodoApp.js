@@ -15,7 +15,7 @@ class TodoApp extends Component {
 	constructor(props, context) {
 		super(props, context);
 		var store = this.props.store;
-		//TODO - Think if you can use PropChange evnet ??
+		//TODO - Think if you can use PropChange event ??
 		store.on('change', () => {
 			this.setState(store.getState());
 		});
@@ -84,6 +84,9 @@ class TodoApp extends Component {
 	}
 
 	render() {
+		if (this.state === undefined || this.state === null) {
+			return <div>Loading ...</div>;
+		}
 		return <div>
 			<section className="todoapp">
 				<header className="header">

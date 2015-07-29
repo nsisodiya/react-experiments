@@ -10,8 +10,12 @@ actionList["TodoActions"] = TodoActions;
 
 
 todostore.on('change', function () {
-	self.postMessage(todostore.getState());
+	self.postMessage({
+		cmd: "/stores/TodoStore/updateState",
+		args: [todostore.getState()]
+	});
 });
+
 self.addEventListener('message', function (e) {
 	console.log("Message arrived", arguments);
 	var data = e.data;
@@ -23,10 +27,18 @@ self.addEventListener('message', function (e) {
 
 	switch (type) {
 		case 'actions':
-			// PASSing  this action to Real ACTION Object
-			//TODO - check, TodoActions[data.method] is a function or not !
 			if (actionList[service] && actionList[service][method] && typeof actionList[service][method] === "function") {
 				actionList[service][method].apply(actionList[service], data.args);
+			}
+			break;
+		case 'stores':
+			//TODO - remove hardcoding !
+			if (data.cmd === "/stores/TodoStore/getInitialState") {
+				self.postMessage({
+					cmd: "callbackUpdate",
+					callbackId: data.callbackId,
+					data: todostore.getState()
+				});
 			}
 			break;
 		default:

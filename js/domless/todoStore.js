@@ -65,7 +65,6 @@ class TodoStoreClass extends BaseStore {
 		}
 		this.setState({
 			todos: this.state.todos.filter(function (v) {
-				console.log(v.id, id, v.id !== id);
 				return v.id !== id;
 			})
 		});

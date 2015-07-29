@@ -15,11 +15,17 @@ window.worker = worker;
 
 worker.addEventListener('message', function (e) {
 	//TODO = switch case !
-	console.log("Update came");
-	fakestore.state = e.data;
-	fakestore.callback()
+	var cmd = e.data.cmd;
+	if (cmd === "/stores/TodoStore/updateState") {
+		console.log("cmd -> ", cmd);
+		fakestore.setState(e.data.args[0]);
+	} else {
+		console.log("Unknown command came from worker", cmd);
+	}
 }, false);
 
+
+//TODO - make a fakeStore better..
 var fakestore = {
 	on: function (eName, callback) {
 		this.callback = callback;
@@ -27,24 +33,16 @@ var fakestore = {
 	getState: function () {
 		return this.state;
 	},
-	state: {
-		todos: [{
-			"task": "Write Book",
-			"done": false,
-			"id": 0
-		}, {
-			"task": "Visit Delhi",
-			"done": false,
-			"id": 1
-		}, {
-			"task": "Learn React",
-			"done": true,
-			"id": 2
-		}],
-		completed: 1,
-		uncompleted: 2
+	setState: function (state) {
+		fakestore.state = state;
+		fakestore.callback()
 	}
 };
+
+worker.get("/stores/TodoStore/getInitialState", (state)=> {
+	console.log("Received State from Worker");
+	fakestore.setState(state);
+});
 
 class T extends Component {
 	constructor() {
