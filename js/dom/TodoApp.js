@@ -15,6 +15,7 @@ class TodoApp extends Component {
 	constructor(props, context) {
 		super(props, context);
 		var store = this.props.store;
+		//TODO - Think if you can use PropChange evnet ??
 		store.on('change', () => {
 			this.setState(store.getState());
 		});
@@ -30,36 +31,41 @@ class TodoApp extends Component {
 	}
 
 	markComplete(e) {
+		var url;
 		if (e.currentTarget.checked) {
-			worker.postMessage({cmd: "TodoActions", method: "markComplete", args: [e.currentTarget.dataset.todoId]});
+			url = "/actions/TodoActions/markComplete";
 		} else {
-			worker.postMessage({cmd: "TodoActions", method: "markUnComplete", args: [e.currentTarget.dataset.todoId]});
+			url = "/actions/TodoActions/markUnComplete";
 		}
+		worker.post(url, e.currentTarget.dataset.todoId);
 	}
 
 	toggleAll(e) {
+		var url;
 		if (e.currentTarget.checked) {
-			worker.postMessage({cmd: "TodoActions", method: "markAllComplete"});
+			url = "/actions/TodoActions/markAllComplete";
 		} else {
-			worker.postMessage({cmd: "TodoActions", method: "markAllUnComplete"});
+			url = "/actions/TodoActions/markAllUnComplete";
 		}
+		worker.post(url);
 	}
 
 	handleSubmit(e) {
-		const text = e.target.value.trim();
+		const text = e.currentTarget.value.trim();
 		if (e.which === 13 && text !== "") {
-			worker.postMessage({cmd: "TodoActions", method: "addTodo", args: [text]});
-			e.target.value = "";
+			worker.post("/actions/TodoActions/addTodo", text);
+			e.currentTarget.value = "";
 		}
 	}
 
 	handleEdit(e) {
-		const text = e.target.value.trim();
+		const text = e.currentTarget.value.trim();
 		if (e.which === 13) {
+			var id = e.currentTarget.dataset.todoId;
 			if (text === "") {
-				worker.postMessage({cmd: "TodoActions", method: "remove", args: [e.currentTarget.dataset]});
+				worker.post("/actions/TodoActions/remove", id);
 			} else {
-				worker.postMessage({cmd: "TodoActions", method: "edit", args: [e.currentTarget.dataset.todoId, text]});
+				worker.post("/actions/TodoActions/edit", id, text);
 			}
 		}
 	}
@@ -69,11 +75,12 @@ class TodoApp extends Component {
 	}
 
 	handleRemove(e) {
-		worker.postMessage({cmd: "TodoActions", method: "remove", args: [e.currentTarget.dataset.todoId]});
+		var id = e.currentTarget.dataset.todoId;
+		worker.post("/actions/TodoActions/remove", id);
 	}
 
 	clearCompleted(e) {
-		worker.postMessage({cmd: "TodoActions", method: "removeAllCompleted"});
+		worker.post("/actions/TodoActions/removeAllCompleted");
 	}
 
 	render() {

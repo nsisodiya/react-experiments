@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 
 import JSONViewer from 'react-json-viewer';
 
-//TODO - store.off when componentdidUmount
 
 class StoreView extends Component {
 	constructor(props, context) {

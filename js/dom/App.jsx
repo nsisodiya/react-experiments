@@ -9,6 +9,9 @@ window.worker = worker;
 
 //TODO - multiple Stores,
 //TODO - getInitialState
+//TODO - Add localStorage !
+//TODO - have better fakeStore - currently "on" function is hardcoded
+
 
 worker.addEventListener('message', function (e) {
 	//TODO = switch case !
