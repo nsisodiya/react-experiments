@@ -15,7 +15,6 @@ class TodoApp extends Component {
 	constructor(props, context) {
 		super(props, context);
 		var store = this.props.store;
-		//TODO - Think if you can use PropChange event ??
 		store.on('change', () => {
 			this.setState(store.getState());
 		});
