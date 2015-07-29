@@ -10,6 +10,8 @@ window.worker = worker;
 
 //TODO - multiple Stores,
 //TODO - Add localStorage !
+//TODO - have FLUX on Server side
+
 
 var fakeTodoStore = new FakeStore({
 	worker: worker,
@@ -20,6 +22,14 @@ var fakeTodoStore = new FakeStore({
 class T extends Component {
 	constructor() {
 		super();
+	}
+
+//	componentDidMount() {
+//		TodoStore.addChangeListener(this._onChange);
+//	}
+
+	componentWillUnmount() {
+		fakeTodoStore.destroy();
 	}
 
 	render() {

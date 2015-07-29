@@ -11,18 +11,22 @@ class FakeStore extends EventEmitter {
 
 		var worker = config.worker;
 
-		//TODO - removeEventListener ??
-		worker.addEventListener('message', (e) => {
+		this.OnStateUpdate = (e) => {
 			var cmd = e.data.cmd;
 			if (cmd === config.cmdOnStateUpdate) {
 				this.setState(e.data.args[0]);
 			}
-		}, false);
+		};
+		worker.addEventListener('message', this.OnStateUpdate, false);
 		worker.get(config.cmdGetInitialState, (state)=> {
 			//console.log("Received State from Worker");
 			this.setState(state);
 		});
 
+	}
+
+	destroy() {
+		worker.removeEventListener('message', this.OnStateUpdate);
 	}
 
 	getState() {
