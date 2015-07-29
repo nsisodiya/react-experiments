@@ -8,7 +8,6 @@ import worker from './initWorker.js';
 window.worker = worker;
 
 //TODO - multiple Stores,
-//TODO - getInitialState
 //TODO - Add localStorage !
 //TODO - have better fakeStore - currently "on" function is hardcoded
 
@@ -19,8 +18,6 @@ worker.addEventListener('message', function (e) {
 	if (cmd === "/stores/TodoStore/updateState") {
 		console.log("cmd -> ", cmd);
 		fakestore.setState(e.data.args[0]);
-	} else {
-		console.log("Unknown command came from worker", cmd);
 	}
 }, false);
 
@@ -40,7 +37,7 @@ var fakestore = {
 };
 
 worker.get("/stores/TodoStore/getInitialState", (state)=> {
-	console.log("Received State from Worker");
+	//console.log("Received State from Worker");
 	fakestore.setState(state);
 });
 
@@ -51,6 +48,16 @@ class T extends Component {
 
 	render() {
 		return <div><h1>React Todo App from Console</h1>
+
+			<div>
+				<h3>Open Console and copy paste following commands</h3>
+				<pre>
+					worker.post("/actions/TodoActions/addTodo", "Using Webworker is fun");
+				</pre>
+				<pre>
+					worker.post("/actions/TodoActions/markComplete", 0);
+				</pre>
+			</div>
 			<TodoApp store={fakestore}></TodoApp>
 		</div>;
 	}

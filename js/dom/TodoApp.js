@@ -70,10 +70,6 @@ class TodoApp extends Component {
 		}
 	}
 
-	handleDoubleClick(e) {
-		//editing flag
-	}
-
 	handleRemove(e) {
 		var id = e.currentTarget.dataset.todoId;
 		worker.post("/actions/TodoActions/remove", id);
@@ -83,6 +79,9 @@ class TodoApp extends Component {
 		worker.post("/actions/TodoActions/removeAllCompleted");
 	}
 
+	handleDoubleClick(e) {
+		//editing flag
+	}
 	render() {
 		if (this.state === undefined || this.state === null) {
 			return <div>Loading ...</div>;

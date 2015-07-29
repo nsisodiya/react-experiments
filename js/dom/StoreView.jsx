@@ -24,6 +24,9 @@ class StoreView extends Component {
 	}
 
 	render() {
+		if (this.state === null || this.state === undefined) {
+			return <div>Loading...</div>
+		}
 		return <div>
 			<div>
 				<button onClick={this.downloadState.bind(this)}>Download</button>

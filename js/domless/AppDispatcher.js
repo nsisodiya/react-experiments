@@ -6,7 +6,7 @@ class AppDispatcher extends Dispatcher {
 	}
 
 	handleViewAction(action) {
-		console.log(action);
+		//console.log(action);
 		this.dispatch({
 			source: "VIEW_ACTION",
 			action: action

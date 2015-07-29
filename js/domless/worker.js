@@ -1,5 +1,3 @@
-console.log("I am from WebWorker, its wow");
-
 var todostore = require('./todoStore');
 
 var TodoActions = require('./TodoActions');
@@ -17,7 +15,7 @@ todostore.on('change', function () {
 });
 
 self.addEventListener('message', function (e) {
-	console.log("Message arrived", arguments);
+	//console.info("Message arrived", arguments);
 	var data = e.data;
 	var x = data.cmd.split("/");
 	x.splice(0, 1);
