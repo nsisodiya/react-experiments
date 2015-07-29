@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import StoreView from './StoreView.jsx';
+import TodoApp from './TodoApp.js';
 
 //var store = require('./todoStore');
 import worker from './initWorker.js';
@@ -11,6 +12,7 @@ window.worker = worker;
 
 worker.addEventListener('message', function (e) {
 	//TODO = switch case !
+	console.log("Update came");
 	fakestore.state = e.data;
 	fakestore.callback()
 }, false);
@@ -23,7 +25,21 @@ var fakestore = {
 		return this.state;
 	},
 	state: {
-		todos: []
+		todos: [{
+			"task": "Write Book",
+			"done": false,
+			"id": 0
+		}, {
+			"task": "Visit Delhi",
+			"done": false,
+			"id": 1
+		}, {
+			"task": "Learn React",
+			"done": true,
+			"id": 2
+		}],
+		completed: 1,
+		uncompleted: 2
 	}
 };
 
@@ -34,7 +50,7 @@ class T extends Component {
 
 	render() {
 		return <div><h1>React Todo App from Console</h1>
-			<StoreView store={fakestore}></StoreView>
+			<TodoApp store={fakestore}></TodoApp>
 		</div>;
 	}
 }

@@ -46,6 +46,9 @@ class TodoStoreClass extends BaseStore {
 	}
 
 	markComplete(id) {
+		if (typeof id === "string") {
+			id = parseInt(id, 10);
+		}
 		this.setState({
 			todos: this.state.todos.map(function (v) {
 				if (v.id === id) {
@@ -57,8 +60,12 @@ class TodoStoreClass extends BaseStore {
 	}
 
 	remove(id) {
+		if (typeof id === "string") {
+			id = parseInt(id, 10);
+		}
 		this.setState({
 			todos: this.state.todos.filter(function (v) {
+				console.log(v.id, id, v.id !== id);
 				return v.id !== id;
 			})
 		});
@@ -82,6 +89,9 @@ class TodoStoreClass extends BaseStore {
 	}
 
 	edit(id, task) {
+		if (typeof id === "string") {
+			id = parseInt(id, 10);
+		}
 		this.setState({
 			todos: this.state.todos.map(function (v) {
 				if (v.id === id) {
@@ -102,6 +112,9 @@ class TodoStoreClass extends BaseStore {
 	}
 
 	markUnComplete(id) {
+		if (typeof id === "string") {
+			id = parseInt(id, 10);
+		}
 		this.setState({
 			todos: this.state.todos.map(function (v) {
 				if (v.id === id) {

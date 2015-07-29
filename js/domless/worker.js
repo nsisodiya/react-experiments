@@ -9,6 +9,7 @@ todostore.on('change', function () {
 	self.postMessage(todostore.getState());
 });
 self.addEventListener('message', function (e) {
+	console.log("Message arrived", e.data);
 	var data = e.data;
 	switch (data.cmd) {
 		case 'TodoActions':
